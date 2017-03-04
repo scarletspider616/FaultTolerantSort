@@ -1,69 +1,66 @@
 // Heapsort for java based on pseudo code found at 
-// http://www.cc.gatech.edu/classes/cs3158_98_fall/heapsort.html
+// http://www.codecodex.com/wiki/Heapsort#Pseudocode
 // Written for lists of integers rather than generically as 
 // this module should only be used with the Fault Tolerant 
 // heapsort program it is packaged with
 
-package java.FaultTolerant.HeapSort;
-
 public class HeapSort {
-	private ArrayList<Integer> values;
-	private int lenOfList;
-	private int heapSize;
 
-	public HeapSort(ArrayList<Integer> toBeSorted, int lenOfList) {
-		this.values = toBeSorted;
-		this.lenOfList = lenOfList;
-		sort();
+	// for initial testing only!
+	public static void main(String[] args) {
+		int[] initialTest = {-10, 0, -22, 33, 44, 98, 97};
+		int [] result = HeapSort.sort(initialTest, 7);
+		for(int r: result) {
+			System.out.print(r);
+			System.out.print(" ");
+		}
+		System.out.println(" ");
 	}
 
-	public ArrayList<Integer> getSortedList() {
-		return this.values;
+	public static int[] sort(int[] sortThis, int length) {
+		heapSort(sortThis, length);
+		return sortThis;
 	}
 
-	private void sort() {
-		buildHeap(values);
-		for (int i = this.lenOfList; i > 1; i--) {
-			swap(1, i);
-			this.heapSize--;
-			heapify(1);
-		}
-	}
+	private static void heapSort(int[] list, int count) {
+		// something 
+		int start = count/2 - 1;
+		int end   = count - 1;
 
-	private void buildHeap() {
-		this.heapSize = this.lenOfList;
-		for (int i = floor(this.lenOfList/2); i > 2; i--) {
-			heapify(i);
-		}
-	}
-
-	private void heapify(int index) {
-		int leftIndex = 2*index;
-		int rightIndex = leftIndex + 1;
-		int max = index;
-
-		if (leftIndex <= this.lenOfList && 
-			this.values.get(leftIndex) > this.values.get(index)) {
-			max = leftIndex;
-		}
-		else {
-			max = index;
+		while(start >= 0) {
+			sift(list, start, count);
+			start = start - 1;
 		}
 
-		if (rightIndex <= this.lenOfList && 
-			this.values.get(rightIndex) > this.values.get(index)) {
-			max = rightIndex;
-		}
-
-		if (max != index) {
-			swap(index, max);
-			heapify(max);
+		while (end > 0) {
+			swap(list, end, 0);
+			sift(list, 0, end);
+			end = end - 1;
 		}
 	}
 
-	private void swap(int index1, int index2) {
-		int temp = this.values.get(index1);
-		this.values.set(index1, this.values.get(index2));
-		this.values.set(index2, temp);
+	private static void sift(int[] list, int start, int count) {
+		int root = start;
+		int child;
+
+		while(root*2 + 1 < count) {
+			child = root * 2 + 1;
+
+			if(child < count - 1 && list[child] < list[child + 1]) {
+				child = child + 1;
+			}
+			if(list[root] < list[child]) {
+				swap(list, root, child);
+				root = child;
+			}
+			else
+				return;
+		}
+	}
+
+	private static void swap(int[] array, int i1, int i2) {
+		int temp = array[i1];
+		array[i1] = array[i2];
+		array[i2] = temp;
 	}
 }

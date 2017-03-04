@@ -1,3 +1,44 @@
+
+#include <jni.h>
+#include <stdio.h>
+#include "InsertionSort.h"
+
+void insertion_sort(int *, int);
+void swap(int *, int, int, int);
+// JNI tutorial used as reference: 
+// https://www3.ntu.edu.sg/home/ehchua/programming/java/JavaNativeInterface.html
+
+// JNI func
+JNIEXPORT jintArray JNICALL Java_InsertionSort_runInsertionSort(
+	JNIEnv * env, jobject thisObj, jintArray inJNIArray) {
+	// convert from java data types to C data types
+	jint * input = (*env)->GetIntArrayElements(env, inJNIArray, NULL);
+	if (input == NULL) {
+		return NULL;
+	}
+	jsize length = (*env)->GetArrayLength(env, inJNIArray);
+
+	insertion_sort(input, length);
+
+	// convert back to java data types and output 
+	jintArray output = (*env)->NewIntArray(env, 2);
+
+	int i;
+	jint temp[length];
+
+	for (i = 0; i < length; i++) {
+		 temp[i] = input[i];
+	}
+	if (output == NULL) {
+		return NULL;
+	}
+	(*env)->SetIntArrayRegion(env, output, 0, length, temp);
+	return output;
+}
+
+
+
+
 // insertion sort implementation in C based on pseudo code found at: 
 // https://en.wikipedia.org/wiki/Insertion_sort
 
@@ -25,7 +66,7 @@ void insertion_sort(int * sort_this_list, int length_of_list) {
 // takes in the pointer to the int array as well as the indexes of the two
 // elements that need to be swapped in this list
 // Also requires the length of the list
-void swap(int * entire_list, int length_of_list, int i1, int i2) {
+void swap(jint * entire_list, jint length_of_list, jint i1, jint i2) {
 	// make sure indexs are in range
 	// since list is 0 indexed, cannot be >= len of list
 	if(i1 >= length_of_list | i2 >= length_of_list) {

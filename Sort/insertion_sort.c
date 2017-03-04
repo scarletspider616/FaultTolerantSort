@@ -9,7 +9,7 @@ void swap(int *, int, int, int);
 // https://www3.ntu.edu.sg/home/ehchua/programming/java/JavaNativeInterface.html
 
 // JNI func
-JNIEXPORT jintArray JNICALL Java_InsertionSort_runInsertionSort(
+JNIEXPORT jintArray JNICALL Java_InsertionSort_runInsertionSort( 
 	JNIEnv * env, jobject thisObj, jintArray inJNIArray) {
 	// convert from java data types to C data types
 	jint * input = (*env)->GetIntArrayElements(env, inJNIArray, NULL);
@@ -18,15 +18,15 @@ JNIEXPORT jintArray JNICALL Java_InsertionSort_runInsertionSort(
 	}
 	jsize length = (*env)->GetArrayLength(env, inJNIArray);
 
-	insertion_sort(input, length);
+	insertion_sort(input, (int) length);
 
 	// convert back to java data types and output 
-	jintArray output = (*env)->NewIntArray(env, 2);
+	jintArray output = (*env)->NewIntArray(env, length);
 
 	int i;
 	jint temp[length];
 
-	for (i = 0; i < length; i++) {
+	for (i = 0; i < (int) length; i++) {
 		 temp[i] = input[i];
 	}
 	if (output == NULL) {
@@ -66,7 +66,7 @@ void insertion_sort(int * sort_this_list, int length_of_list) {
 // takes in the pointer to the int array as well as the indexes of the two
 // elements that need to be swapped in this list
 // Also requires the length of the list
-void swap(jint * entire_list, jint length_of_list, jint i1, jint i2) {
+void swap(int * entire_list, int length_of_list, int i1, int i2) {
 	// make sure indexs are in range
 	// since list is 0 indexed, cannot be >= len of list
 	if(i1 >= length_of_list | i2 >= length_of_list) {

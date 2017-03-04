@@ -3,7 +3,7 @@
 
 public class InsertionSort {
 	static {
-		System.loadLibrary("insertion_sort.dylib");
+		System.loadLibrary("InsertionSort");
 	}
 
 	// native method
@@ -13,6 +13,8 @@ public class InsertionSort {
 	public static void main(String [] args) {
 		int[] sortThis = {13, -15, 223, 18, -2, 0}; // 4 initial testing only
 		int[] result = new InsertionSort().runInsertionSort(sortThis);
-		System.out.println(result); // 4 initial testing only 
+		for (int r:result) {
+			System.out.println(r);
+		}
 	}
 }

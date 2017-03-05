@@ -23,7 +23,7 @@ public class InsertionSort {
 
 	// Driver (as main for initial testing only)
 	public static void main(String [] args) {
-		int[] sortThis = {13, -15, 223, 18, -2, 0}; // 4 initial testing only
+		int[] sortThis = {-15, 4, 99, 0, 87, 32, 1, -1}; // 4 initial testing only
 		int[] result = new InsertionSort().runInsertionSort(sortThis);
 		for (int r:result) {
 			System.out.println(r);

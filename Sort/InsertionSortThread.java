@@ -5,7 +5,7 @@ public class InsertionSortThread extends Thread implements RcBVariantThread {
 
 	public void run() {
 		try {
-			result = InsertionSort.sort(inputData);
+			this.result = InsertionSort.sort(inputData);
 
 		} catch(ThreadDeath td) {
 			// timeout
@@ -17,15 +17,15 @@ public class InsertionSortThread extends Thread implements RcBVariantThread {
 	public InsertionSortThread(int[] inputData) {
 		super();
 		this.inputData = inputData;
-		result = null;
 	}
 
 	public int[] getResult() {
-		return result;
+		System.out.println(this.result);
+		return this.result;
 	}
 
 	public String toString() {
-		return "Variant 1 (HeapSort)";
+		return "Variant 2 (InsertionSort)";
 	}
 	public int getMemCount() {
 		return InsertionSort.getMemCount();

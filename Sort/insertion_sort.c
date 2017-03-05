@@ -55,12 +55,17 @@ JNIEXPORT jintArray JNICALL Java_InsertionSort_runInsertionSort(
 void insertion_sort(int * sort_this_list, int length_of_list, 
 		int * mem_counter) {
 	int i;
-	for(i = 1; i <= length_of_list; i++) {
+	for(i = 1; i < length_of_list; i++) {
 		// start at leftmost, make our way all the way to the right
 		int j = i;
 		// if prev element is greater than curr element swap these two
 		// continue left until end of list or the prev element is less than or 
 		// equal to the next element.
+		// int a;
+		// for(a = 0; a < length_of_list; a++) {
+		// 	printf("%d ", sort_this_list[a]);
+		// }
+		// printf("\n");
 		(*mem_counter)++;
 		(*mem_counter)++;
 		while(j > 0 && sort_this_list[j-1] > sort_this_list[j]) {
@@ -80,6 +85,7 @@ void swap(int * entire_list, int length_of_list, int i1, int i2,
 	if(i1 >= length_of_list | i2 >= length_of_list) {
 		// TODO: THROW EXCEPTION!!!
 	}
+	// printf("%d: %d %d: %d\n",i1, entire_list[i1], i2, entire_list[i2]);
 	(*mem_count)++;
 	(*mem_count)++;
 	int temp = entire_list[i1];

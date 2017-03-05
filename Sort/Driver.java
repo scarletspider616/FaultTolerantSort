@@ -9,8 +9,8 @@ import java.io.FileWriter;
 public class Driver {
 	private static String inputFilename;
 	private static String outputFilename;
-	private static int primaryFailureRate;
-	private static int secondaryFailureRate;
+	private static Double primaryFailureRate;
+	private static Double secondaryFailureRate;
 	private static int[] inputData;
 	private static int timeout;
 
@@ -29,7 +29,7 @@ public class Driver {
 
 	private static void runPrimary() {
 		// run primary and start watchdog timer
-
+		System.out.println("Running Primary variant");
 		HeapSortThread primary = 
 		new HeapSortThread(inputData);
 		Timer t = new Timer();
@@ -41,7 +41,8 @@ public class Driver {
 		try {
 			primary.join();
 			t.cancel();
-			if(Driver.adjudicate(primary.getResult())) {
+			if(Driver.adjudicate(primary.getResult(), primary.getMemCount(),
+					primaryFailureRate)) {
 				System.out.println(primary.getResult());
 				Driver.writeResult(primary.getResult());
 			}
@@ -61,18 +62,32 @@ public class Driver {
 		new InsertionSortThread(Driver.readInputData());
 		Timer t = new Timer();
 		Watchdog w = new Watchdog(secondary);
-
+		for(int r: Driver.readInputData()) {
+			System.out.print(r);
+			System.out.print(" ");
+		}
+		System.out.println();
 		// start secondary & WD timer
 		t.schedule(w, timeout);
 		secondary.start();
 		try {
 			secondary.join();
+			// for(int r: secondary.getResult()) {
+			// 	System.out.print(r);
+			// }
+			// System.out.println();
 			t.cancel();
 			// check results
-			if(Driver.adjudicate(secondary.getResult())) {
+			if(Driver.adjudicate(secondary.getResult(), secondary.getMemCount(),
+					secondaryFailureRate)) {
 				Driver.writeResult(secondary.getResult());
 			}
 			else {
+				for(int r:secondary.getResult()) {
+					System.out.print(r);
+					System.out.print(" ");
+				}
+				System.out.println();
 				Driver.writeFailedResult();
 			}
 		} catch (InterruptedException e) {
@@ -80,14 +95,30 @@ public class Driver {
 		}
 	}
 
-	private static Boolean adjudicate(int [] result, int count, int prob) {
-		if(result == null) return false;
-		if(sum(Driver.readInputData()) != sum(result)) return false;
-		for(int i = 1; i < result.length; i++) {
-			if(result[i] < result[i-1]) return false;
+	private static Boolean adjudicate(int [] result, int count, double prob) {
+			// System.out.println(result);
+		if(result == null) {
+			System.out.println("ADJUDICATOR: was null");
+			return false;
 		}
-		if(hardwarePassed(count, prob)) return true;
-		return false;		
+		if(sum(Driver.readInputData()) != sum(result)) {
+			System.out.println("ADJUDICATOR: sum mismatch");
+			return false;
+		}
+		for(int i = 1; i < result.length; i++) {
+			if(result[i] < result[i-1]) {
+				System.out.println("ADJUDICATOR: elements not ascending");
+				return false;
+			}
+		}
+		if(hardwarePassed(count, prob)) {
+			System.out.println("ADJUDICATOR: passed");
+			return true;
+		}
+		else {
+			System.out.println("ADJUDICATOR: hardware failure (mem)");
+			return false;
+		}
 	}
 
 	private static int sum(int [] numbers) {
@@ -98,9 +129,17 @@ public class Driver {
 		return sum;
 	}
 
-	private static Boolean hardwarePassed(int count, int prob) {
+	private static Boolean hardwarePassed(int count, double prob) {
 		// algorithm to simlute hardware failures based on inputted probs
-
+		// hazard = count * prob
+		// if random number is in range [0.5, 0.5+HAZARD] harware fails
+		double hazard = count * prob; 
+		double random = Math.random();
+		if(random < 0.5) return true;
+		if(random - (0.5 + hazard) <= 0) {
+			return false;
+		}
+		return true;
 	}
 
 	private static int[] readInputData() {
@@ -136,14 +175,12 @@ public class Driver {
 		try {
 		    BufferedWriter bw = new BufferedWriter(
 		    	new FileWriter(outputFilename));
-		    System.out.println(outputFilename);
 		    String output = "";
 		    for(int number: result) {
 		    	output = output + Integer.toString(number) + " ";
 		    }
 			bw.write(output);
 			bw.flush();
-			System.out.println("Done");
 		 } catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -171,26 +208,26 @@ public class Driver {
 						"to countain output data: ");
 	}
 
-	private static int getSecondaryFailureRate() {
+	private static Double getSecondaryFailureRate() {
 		try {
-			return commandLineIntResponse("Please enter Second Variant " +
+			return commandLineDoubleResponse("Please enter Second Variant " +
 					"failure prob: ");
 		} catch (InputMismatchException e) {
-			System.out.println("ERROR: Input was not valid int");
+			System.out.println("ERROR: Input was not valid double");
 			System.exit(-1);
 		}
-		return -1;
+		return null;
 	}
 
-	private static int getPrimaryFailureRate() {
+	private static Double getPrimaryFailureRate() {
 		try {
-			return commandLineIntResponse("Please enter First Variant " +
+			return commandLineDoubleResponse("Please enter First Variant " +
 					"failure prob: ");
 		} catch (InputMismatchException e) {
-			System.out.println("ERROR: Input was not valid int");
+			System.out.println("ERROR: Input was not valid double");
 			System.exit(-1);
 		}
-		return -1;
+		return null;
 	}
 
 	private static int getTimeout() {
@@ -213,5 +250,11 @@ public class Driver {
 		System.out.print(prompt);
 		Scanner scanner = new Scanner(System.in);
 		return scanner.nextInt();
+	}
+
+	private static Double commandLineDoubleResponse(String prompt) {
+		System.out.print(prompt);
+		Scanner scanner = new Scanner(System.in);
+		return scanner.nextDouble();
 	}
 }

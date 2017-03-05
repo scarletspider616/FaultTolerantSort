@@ -15,7 +15,7 @@ public class InsertionSortThread extends Thread implements RcBVariantThread {
 
 	public InsertionSortThread(int[] inputData) {
 		super();
-		inputData = inputData;
+		this.inputData = inputData;
 		result = null;
 	}
 

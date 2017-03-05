@@ -2,9 +2,19 @@
 // https://www3.ntu.edu.sg/home/ehchua/programming/java/JavaNativeInterface.html
 
 public class InsertionSort {
+	// private int[] result;
+
 	static {
 		System.loadLibrary("InsertionSort");
 	}
+
+	// public InsertionSort(int[] inputData) {
+	// 	result = new InsertionSort().runInsertionSort(inputData);
+	// } 
+
+	// public int[] getSortedResult() {
+	// 	return this.result;
+	// }
 
 	// native method
 	private native int[] runInsertionSort(int[] sortThis);
@@ -16,5 +26,10 @@ public class InsertionSort {
 		for (int r:result) {
 			System.out.println(r);
 		}
+	}
+
+	public static int[] sort(int[] inputData) {
+		int [] result = new InsertionSort().runInsertionSort(inputData);
+		return result;
 	}
 }

@@ -27,4 +27,9 @@ public class InsertionSortThread extends Thread implements RcBVariantThread {
 	public String toString() {
 		return "Variant 1 (HeapSort)";
 	}
+	public int getMemCount() {
+		return InsertionSort.getMemCount();
+	}
+
+
 }

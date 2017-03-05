@@ -80,13 +80,14 @@ public class Driver {
 		}
 	}
 
-	private static Boolean adjudicate(int [] result) {
+	private static Boolean adjudicate(int [] result, int count, int prob) {
 		if(result == null) return false;
 		if(sum(Driver.readInputData()) != sum(result)) return false;
 		for(int i = 1; i < result.length; i++) {
 			if(result[i] < result[i-1]) return false;
 		}
-		return true;		
+		if(hardwarePassed(count, prob)) return true;
+		return false;		
 	}
 
 	private static int sum(int [] numbers) {
@@ -95,6 +96,11 @@ public class Driver {
 			sum = sum + number;
 		}
 		return sum;
+	}
+
+	private static Boolean hardwarePassed(int count, int prob) {
+		// algorithm to simlute hardware failures based on inputted probs
+
 	}
 
 	private static int[] readInputData() {

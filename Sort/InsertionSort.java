@@ -28,6 +28,7 @@ public class InsertionSort {
 		for (int r:result) {
 			System.out.println(r);
 		}
+		System.out.println(getMemCount());
 	}
 
 	public static int[] sort(int[] inputData) {
@@ -38,7 +39,7 @@ public class InsertionSort {
 
 	public static int getMemCount() {
 		try {
-			File f = new File("mem_count_insertion.data");
+			File f = new File("~mem_count_insertion.data");
 			Scanner scanner = new Scanner(f);
 			memCount = scanner.nextInt();
 			f.delete();

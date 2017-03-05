@@ -41,9 +41,9 @@ public class Driver {
 		try {
 			primary.join();
 			t.cancel();
+			System.out.println(primary.getMemCount());
 			if(Driver.adjudicate(primary.getResult(), primary.getMemCount(),
 					primaryFailureRate)) {
-				System.out.println(primary.getResult());
 				Driver.writeResult(primary.getResult());
 			}
 			else {
@@ -62,11 +62,8 @@ public class Driver {
 		new InsertionSortThread(Driver.readInputData());
 		Timer t = new Timer();
 		Watchdog w = new Watchdog(secondary);
-		for(int r: Driver.readInputData()) {
-			System.out.print(r);
-			System.out.print(" ");
-		}
-		System.out.println();
+
+
 		// start secondary & WD timer
 		t.schedule(w, timeout);
 		secondary.start();
@@ -77,17 +74,18 @@ public class Driver {
 			// }
 			// System.out.println();
 			t.cancel();
+			System.out.println(secondary.getMemCount());
 			// check results
 			if(Driver.adjudicate(secondary.getResult(), secondary.getMemCount(),
 					secondaryFailureRate)) {
 				Driver.writeResult(secondary.getResult());
 			}
 			else {
-				for(int r:secondary.getResult()) {
-					System.out.print(r);
-					System.out.print(" ");
-				}
-				System.out.println();
+				// for(int r:secondary.getResult()) {
+				// 	System.out.print(r);
+				// 	System.out.print(" ");
+				// }
+				// System.out.println();
 				Driver.writeFailedResult();
 			}
 		} catch (InterruptedException e) {

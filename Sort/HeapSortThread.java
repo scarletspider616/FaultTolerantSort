@@ -21,8 +21,7 @@ public class HeapSortThread extends Thread implements RcBVariantThread {
 	}
 
 	public int[] getResult() {
-		return null;
-		// return this.result;
+		return this.result;
 	}
 
 	public int getMemCount() {

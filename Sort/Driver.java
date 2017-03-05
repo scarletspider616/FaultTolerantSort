@@ -41,7 +41,6 @@ public class Driver {
 		try {
 			primary.join();
 			t.cancel();
-			System.out.println(primary.getMemCount());
 			if(Driver.adjudicate(primary.getResult(), primary.getMemCount(),
 					primaryFailureRate)) {
 				Driver.writeResult(primary.getResult());
@@ -74,7 +73,6 @@ public class Driver {
 			// }
 			// System.out.println();
 			t.cancel();
-			System.out.println(secondary.getMemCount());
 			// check results
 			if(Driver.adjudicate(secondary.getResult(), secondary.getMemCount(),
 					secondaryFailureRate)) {

@@ -20,7 +20,6 @@ public class InsertionSortThread extends Thread implements RcBVariantThread {
 	}
 
 	public int[] getResult() {
-		System.out.println(this.result);
 		return this.result;
 	}
 

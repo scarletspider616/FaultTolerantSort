@@ -10,6 +10,7 @@ public class HeapSortThread extends Thread implements RcBVariantThread {
 			// timeout
 			this.result = null;
 			System.out.println(toString() + "Timed out");
+			System.out.println("Running secondary...");
 		}
 	}
 
@@ -22,6 +23,10 @@ public class HeapSortThread extends Thread implements RcBVariantThread {
 	public int[] getResult() {
 		return null;
 		// return this.result;
+	}
+
+	public int getMemCount() {
+		return HeapSort.getMemCount();
 	}
 
 	public String toString() {

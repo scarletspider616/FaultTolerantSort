@@ -46,6 +46,8 @@ public class Driver {
 				Driver.writeResult(primary.getResult());
 			}
 			else {
+				System.out.println("ERROR: Primary failed AT!\n" + 
+					"Running secondary....");
 				Driver.runSecondary();
 			}
 		}

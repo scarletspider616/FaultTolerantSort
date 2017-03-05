@@ -5,6 +5,7 @@
 // heapsort program it is packaged with
 
 public class HeapSort {
+	private static int memCount;
 
 	// for initial testing only!
 	public static void main(String[] args) {
@@ -18,6 +19,7 @@ public class HeapSort {
 	}
 
 	public static int[] sort(int[] sortThis, int length) {
+		memCount = 0;
 		heapSort(sortThis, length);
 		return sortThis;
 	}
@@ -46,9 +48,13 @@ public class HeapSort {
 		while(root*2 + 1 < count) {
 			child = root * 2 + 1;
 
-			if(child < count - 1 && list[child] < list[child + 1]) {
-				child = child + 1;
+			if(child < count - 1) {
+				count();
+				if (list[child] < list[child + 1]) {
+					child = child + 1;
+				}
 			}
+			count();
 			if(list[root] < list[child]) {
 				swap(list, root, child);
 				root = child;
@@ -58,9 +64,23 @@ public class HeapSort {
 		}
 	}
 
+	public static int getMemCount() {
+		int temp = memCount;
+		memCount = 0; // reset
+		return temp;
+	}
+
+	private static void count() {
+		// adds mem read/write to count
+		memCount = memCount + 1;
+	}
+
 	private static void swap(int[] array, int i1, int i2) {
 		int temp = array[i1];
+		count();
 		array[i1] = array[i2];
+		count();
 		array[i2] = temp;
+		count();
 	}
 }

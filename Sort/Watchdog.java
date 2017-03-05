@@ -25,7 +25,7 @@ Thread watched;
 	public void run() {
 		
 		watched.stop();
-		System.out.println(watched.toString() + " stopped.");
+		// System.out.println(watched.toString() + " timed out.");
 	}
 
 	// overrides the "watched" thread 

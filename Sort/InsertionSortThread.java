@@ -2,6 +2,7 @@ public class InsertionSortThread extends Thread implements RcBVariantThread {
 	private int[] inputData;
 	private int[] result;
 
+
 	public void run() {
 		try {
 			result = InsertionSort.sort(inputData);

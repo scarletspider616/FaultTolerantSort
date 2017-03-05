@@ -3,7 +3,6 @@
 
 public class InsertionSort {
 	// private int[] result;
-
 	static {
 		System.loadLibrary("InsertionSort");
 	}
@@ -29,6 +28,7 @@ public class InsertionSort {
 	}
 
 	public static int[] sort(int[] inputData) {
+		// mem count is stored in the last element of the array
 		int [] result = new InsertionSort().runInsertionSort(inputData);
 		return result;
 	}

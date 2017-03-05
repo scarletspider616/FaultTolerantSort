@@ -2,22 +2,17 @@ import java.util.*;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.IOException;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 
-/*
- *
- 
- */
 
-/**
- *
- *
- */
 public class Driver {
 	private static String inputFilename;
 	private static String outputFilename;
 	private static int primaryFailureRate;
 	private static int secondaryFailureRate;
 	private static int[] inputData;
+	private static int timeout;
 
 	public static void main(String[] args) {
 		// grab user inputs
@@ -26,6 +21,7 @@ public class Driver {
 		primaryFailureRate = Driver.getPrimaryFailureRate();
 		secondaryFailureRate = Driver.getSecondaryFailureRate();
 		inputData = Driver.readInputData();
+		timeout = Driver.getTimeout();
 
 		// run primary and start watchdog timer
 		runPrimary();
@@ -40,7 +36,7 @@ public class Driver {
 		Watchdog w = new Watchdog(primary);
 
 		// start primary & WD timer
-		t.schedule(w, 1000);
+		t.schedule(w, timeout);
 		primary.start();
 		try {
 			primary.join();
@@ -65,7 +61,7 @@ public class Driver {
 		Watchdog w = new Watchdog(secondary);
 
 		// start secondary & WD timer
-		t.schedule(w, 1000);
+		t.schedule(w, timeout);
 		secondary.start();
 		try {
 			secondary.join();
@@ -128,23 +124,30 @@ public class Driver {
 		}
 		System.out.println(" ");
 		// based on:
-		// http://stackoverflow.com/questions/2885173/how-do-i-create-a-file-and-write-to-it-in-java
+		// http://stackoverflow.com/questions/12350248/java-difference-between-filewriter-and-bufferedwriter
 		try {
-		    PrintWriter writer = new PrintWriter(outputFilename, "UTF-8");
+		    BufferedWriter bw = new BufferedWriter(
+		    	new FileWriter(outputFilename));
+		    System.out.println(outputFilename);
+		    String output = "";
 		    for(int number: result) {
-		    	writer.print(number);
-		    	writer.print(" ");
+		    	output = output + Integer.toString(number) + " ";
 		    }
-		    writer.println(" ");
-		} catch (IOException e) {
-		   // do something
+			bw.write(output);
+			bw.flush();
+			System.out.println("Done");
+		 } catch (IOException e) {
+			e.printStackTrace();
 		}
+	    System.out.println(
+	    	"Results should be available in " + outputFilename);
 	}
 
 	private static void writeFailedResult() {
 		try {
 		    PrintWriter writer = new PrintWriter(outputFilename, "UTF-8");
 		    writer.println("Unfortunately the sort process has failed.");
+		    System.out.println("Failure.");
 		} catch (IOException e) {
 		   // do something
 		}
@@ -175,6 +178,16 @@ public class Driver {
 		try {
 			return commandLineIntResponse("Please enter First Variant " +
 					"failure prob: ");
+		} catch (InputMismatchException e) {
+			System.out.println("ERROR: Input was not valid int");
+			System.exit(-1);
+		}
+		return -1;
+	}
+
+	private static int getTimeout() {
+		try {
+			return commandLineIntResponse("Please enter timeout (ms, int): ");
 		} catch (InputMismatchException e) {
 			System.out.println("ERROR: Input was not valid int");
 			System.exit(-1);

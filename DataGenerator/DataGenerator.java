@@ -13,8 +13,9 @@ public class DataGenerator {
 	* and then write the data to the file.
 	**/
 	public DataGenerator(String outputFileName, int numOfValues) {
-		// TODO: Write to file implementation 
-		// can i use random.org truly random values with open source API
-		// or do i need to actually make a pseudorandom generator w/ seed? 
+		int randomValues[numOfValues];
+		for(int i=0; i < numOfValues; i++) {
+				randomValues[i] = getRandomInt();
+		}
 	}
 }

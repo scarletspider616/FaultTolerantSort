@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.io.IOException;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.File;
 
 
 public class Driver {
@@ -186,13 +187,12 @@ public class Driver {
 	}
 
 	private static void writeFailedResult() {
+
+		// delete output.txt if it exists. 
 		try {
-		    PrintWriter writer = new PrintWriter(outputFilename, "UTF-8");
-		    writer.println("Unfortunately the sort process has failed.");
-		    System.out.println("Failure.");
-		} catch (IOException e) {
-		   // do something
-		}
+			File f = new File(outputFilename);
+			f.delete();
+		} catch (Exception e) {}
 	}
 
 	private static String getInputFilename() {

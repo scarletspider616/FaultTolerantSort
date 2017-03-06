@@ -41,6 +41,7 @@ public class DataGenerator {
 	}
 
 	private void writeValues(int[] writeValues, String outputFilename) {
+		outputFilename = "../" + outputFilename;
 		System.out.println("Random Values Produced: ");
 		for(int r: writeValues) {
 			System.out.print(r);

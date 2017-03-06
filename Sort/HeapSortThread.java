@@ -1,4 +1,4 @@
-public class HeapSortThread extends Thread implements RcBVariantThread {
+public class HeapSortThread extends Thread {
 	private int[] inputData;
 	private int[] result;
 

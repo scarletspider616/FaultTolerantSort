@@ -195,12 +195,12 @@ public class Driver {
 	}
 
 	private static String getInputFilename() {
-		return commandLineStringResponse("Please enter name of input data "+
+		return "../" + commandLineStringResponse("Please enter name of input data "+
 					"file: ");
 	}
 
 	private static String getOutputFilename() {
-		return commandLineStringResponse("Please choose name for new file " +
+		return "../" + commandLineStringResponse("Please choose name for new file " +
 						"to countain output data: ");
 	}
 

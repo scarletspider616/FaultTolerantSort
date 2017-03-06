@@ -1,5 +1,0 @@
-public class TestThread {
-	public static void main(String [] args) {
-		HeapSortThread thread = new HeapSortThread();
-	}
-}

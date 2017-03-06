@@ -1,4 +1,4 @@
-public class InsertionSortThread extends Thread implements RcBVariantThread {
+public class InsertionSortThread extends Thread {
 	private int[] inputData;
 	private int[] result;
 

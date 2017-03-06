@@ -14,3 +14,6 @@ javac Driver.java
 
 cd ../DataGenerator
 echo "Building Random Number Generator"
+javac DataGenerator.java
+
+"Installation finished. Please check for any errors in compilation."

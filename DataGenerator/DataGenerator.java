@@ -42,12 +42,12 @@ public class DataGenerator {
 
 	private void writeValues(int[] writeValues, String outputFilename) {
 		outputFilename = "../" + outputFilename;
-		System.out.println("Random Values Produced: ");
-		for(int r: writeValues) {
-			System.out.print(r);
-			System.out.print(" ");
-		}
-		System.out.println(" ");
+		// System.out.println("Random Values Produced: ");
+		// for(int r: writeValues) {
+		// 	System.out.print(r);
+		// 	System.out.print(" ");
+		// }
+		// System.out.println(" ");
 		// based on:
 		// http://stackoverflow.com/questions/12350248/java-difference-between-filewriter-and-bufferedwriter
 		try {

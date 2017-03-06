@@ -163,11 +163,11 @@ public class Driver {
 	}
 
 	private static void writeResult(int [] result) {
-		for(int r: result) {
-			System.out.print(r);
-			System.out.print(" ");
-		}
-		System.out.println(" ");
+		// for(int r: result) {
+		// 	System.out.print(r);
+		// 	System.out.print(" ");
+		// }
+		// System.out.println(" ");
 		// based on:
 		// http://stackoverflow.com/questions/12350248/java-difference-between-filewriter-and-bufferedwriter
 		try {

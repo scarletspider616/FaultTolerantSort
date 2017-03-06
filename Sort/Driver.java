@@ -131,6 +131,7 @@ public class Driver {
 		// if random number is in range [0.5, 0.5+HAZARD] harware fails
 		double hazard = count * prob; 
 		double random = Math.random();
+		System.out.println("Hazard: " + hazard + " Random: " + random);
 		if(random < 0.5) return true;
 		if(random - (0.5 + hazard) <= 0) {
 			return false;

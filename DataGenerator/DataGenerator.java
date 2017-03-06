@@ -1,4 +1,3 @@
-package project1.datagen;
 
 import java.util.concurrent.ThreadLocalRandom;
 import java.io.BufferedWriter;
@@ -55,10 +54,9 @@ public class DataGenerator {
 		    	new FileWriter(outputFilename));
 		    String output = "";
 		    for(int number: writeValues) {
-		    	output = output + Integer.toString(number) + " ";
+		    	bw.write(Integer.toString(number) + " ");
+		    	bw.flush();
 		    }
-			bw.write(output);
-			bw.flush();
 		 } catch (IOException e) {
 			e.printStackTrace();
 		}

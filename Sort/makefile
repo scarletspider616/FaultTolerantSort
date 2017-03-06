@@ -10,7 +10,7 @@ LINUXFLAGS=-shared -fpic -o libInsertionSort.so -I$(JAVA_HOME)/include/ -I$(JAVA
 
 LINUXARGS=insertion_sort.c
 
-MACARGS=insertion_sort.c -o
+MACARGS=insertion_sort.c
 
 UNAME_S:=$(shell uname -s)
 ifeq ($(UNAME_S),Linux)

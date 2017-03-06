@@ -10,7 +10,7 @@ LINUXFLAGS=-shared -fpic -o libInsertionSort.so -I$(JAVA_HOME)/include/ -I$(JAVA
 
 LINUXARGS=insertion_sort.c
 
-MACARGS=insertion_sort.c
+MACARGS=insertion_sort.c -o
 
 UNAME_S:=$(shell uname -s)
 ifeq ($(UNAME_S),Linux)
@@ -22,11 +22,13 @@ ifeq ($(UNAME_S),Darwin)
 	MACSTEP+=libtool -dynamic -lSystem libInsertionSort.o -o libInsertionSort.dylib libInsertionSort.o
 	CARGS+=$(MACARGS)
 endif
+run: 
+	java Driver
 
-run: all
+runInsertionTest: all
 	java InsertionSort
 
-all: compilejava createJNIheader makenative linklibrary setjavapath
+all: compilejava createJNIheader makenative linklibrary setjavapath others
 
 compilejava: 
 	javac InsertionSort.java
@@ -39,6 +41,14 @@ makenative: insertion_sort.c InsertionSort.h
 
 linklibrary:  
 	$(MACSTEP)
+
+others:
+	javac HeapSort.java
+	javac InsertionSort.java
+	javac Watchdog.java
+	javac HeapSortThread.java
+	javac InsertionSortThread.java
+	javac Driver.java
 
 
 setjavapath: 

@@ -3,17 +3,15 @@
 echo "Welcome to FaultTolerantHeapSort Installer " 
 echo "By Joey-Michael Fallone"
 
-echo "Buidling project..."
-cd sort 
 echo "Setting up classpath..." 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.
-echo "Building Native Methods..."
-make clean
-make all
-javac Driver.java
 
-cd ../DataGenerator
-echo "Building Random Number Generator"
-javac DataGenerator.java
+echo "Building Native Methods and threads..."
+make clean -C Sort
+make all -C Sort
+
+
+echo "Building Random Number Generator..."
+javac DataGenerator/DataGenerator.java
 
 "Installation finished. Please check for any errors in compilation."

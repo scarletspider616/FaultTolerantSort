@@ -1,5 +1,7 @@
 Welcome to my fault tolerant sorting algorithm
 
+Documentation (UML and use case seq. diagrams) are available in doc/
+
 This algorithm uses RcB to sort a randomized list of integers (data generator
 is also provided). The primary variant algorithm is heap sort in java, the 
 secondary (backup) algorithm is insertion sort in C. 
